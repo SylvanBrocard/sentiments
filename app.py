@@ -33,4 +33,9 @@ def get_contact():
     else:
         return render_template('contact.html', form=form)
 
+@app.route("/about")
+def about():
+    return render_template('about.html')
+
+
 app.run(debug=True)
