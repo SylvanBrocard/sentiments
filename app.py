@@ -29,7 +29,7 @@ def get_contact():
         message = request.form["message"]
         res = pd.DataFrame({'name':name, 'email':email, 'subject':subject ,'message':message}, index=[0])
         res.to_csv('./contactusMessage.csv')
-        print("The data are saved !")
+        return "<p>Merci de nous avoir contactés.</p>"
     else:
         return render_template('contact.html', form=form)
 
