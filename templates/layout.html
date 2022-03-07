@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+
+<!-- add the right css file -->
+{% block styles %}
+<link rel="stylesheet" href="{{url_for('.static', filename='styles.css')}}">
+{% endblock %}
+
+
+<html>
+<head></head>
+<body style="background-color:rgb(211, 227, 248)">
+  <img src="/static/about_us.jpg" alt="about_us" style="width:100%">
+
+  {% block content %}{% endblock %}
+
+</body>
+</html>
