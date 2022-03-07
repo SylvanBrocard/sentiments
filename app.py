@@ -10,8 +10,9 @@ app = Flask(__name__)
 app.secret_key = 'secretKey'
 
 @app.route("/")
+@app.route("/home")
 def home():
-    return "<p>Bienvenue chez moi</p>"
+    return render_template('home.html')
 
 
 ###############################################
