@@ -1,9 +1,5 @@
-<!-- add the right css file -->
-{% block styles %}
-<link rel="stylesheet" href="{{url_for('.static', filename='styles.css')}}">
-{% endblock %}
-
 <!-- here we add our contact forms -->
+{% extends "layout.html" %}
 {% block content %}
 <div class="contact">
     <h3>Contact us</h3>
