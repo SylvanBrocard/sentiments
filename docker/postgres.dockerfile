@@ -1,0 +1,4 @@
+FROM postgres
+ENV POSTGRES_USER wym_admin
+ENV POSTGRES_PASSWORD admin
+ENV POSTGRES_DB messages
