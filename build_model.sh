@@ -1,0 +1,1 @@
+docker pull codait/max-text-summarizer

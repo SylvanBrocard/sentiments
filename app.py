@@ -6,7 +6,6 @@ import pandas as pd
 import psycopg2
 import requests
 
-
 ###############################################
 #          Define flask app                   #
 ###############################################
@@ -33,10 +32,8 @@ def get_contact():
         subject = "'" + request.form["subject"] + "'"
         message = "'" + request.form["message"] + "'"
         global id
-        print(f"""INSERT INTO clients (id, name, email, subject, message) VALUES ({id},{name},{email},{subject},{message});""")
         
         conn = get_connection()
-        conn.autocommit = True
 
         curr = conn.cursor()
 
@@ -62,37 +59,37 @@ def about():
 ###############################################
 def get_connection():
     try:
-        return psycopg2.connect(
+        conn = psycopg2.connect(
             database="messages",
             user="wym_admin",
             password="admin",
             host="localhost",
             port=5432,
         )
+        conn.autocommit = True
+        return conn
     except:
         return False
 
 
 conn = get_connection() # create connection object
 
-conn.autocommit = True
 if conn:
     print("Connection to the PostgreSQL established successfully.")
+    curr = conn.cursor() # cursor object
+    # create table in database
+    curr.execute("""CREATE TABLE IF NOT EXISTS clients (
+                    id serial PRIMARY KEY,
+                    name TEXT,
+                    email TEXT,
+                    subject TEXT,
+                    message TEXT);
+                    """)
+    id = 0 # initialize id at 0
+
+    conn.close() # close connection to database
 else:
     print("Connection to the PostgreSQL encountered an error.")
-
-curr = conn.cursor() # cursor object
-
-# create table in database
-curr.execute("""CREATE TABLE IF NOT EXISTS clients (
-                id serial PRIMARY KEY,
-                name TEXT,
-                email TEXT,
-                subject TEXT,
-                message TEXT);
-                """)
-id = 0 # initialize id at 0
-conn.close()
 
 
 ###############################################
@@ -104,7 +101,7 @@ def summarize():
     # here, if the request type is a POST we get the data from
     #forms and save them else we return the forms html page
     if request.method == 'POST':
-        userTxt =  "'" + request.form["Text"] + "'"
+        userTxt =  "'" + request.form["text"] + "'"
 
         url = "http://localhost:5000/model/predict"
         data = {

@@ -6,12 +6,12 @@
 
     <!-- Just here i use "url_for" to call the function get_contact.
          This function return the html code of our contact page-->
-    <form action="{{ url_for('summarize()') }}" method=post>
+    <form action="{{ url_for('summarize') }}" method=post>
         <div>
             <!-- Content of your request -->
             <p>
                 {{ form.text.label }} <br>
-                {{ form.name(placeholder='Your text to summarize') }}
+                {{ form.text(placeholder='Your text to summarize') }}
             </p>
             <!-- Submit button -->
             <p>
