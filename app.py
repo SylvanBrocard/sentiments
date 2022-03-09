@@ -1,6 +1,6 @@
 from locale import currency
 from flask import Flask, render_template
-from forms import ContactForm
+from forms import ContactForm, SummarizeForm
 from flask import request
 import pandas as pd
 import psycopg2
@@ -95,18 +95,30 @@ id = 0 # initialize id at 0
 conn.close()
 
 
-@app.route("/model")
-def summarize(userTxt):
-    url = "http://localhost:5000/model/predict"
-    data = {
-    "text": [
-        userTxt
-        ]
-    }
+###############################################
+#         Post on IBM text Summarizer         #
+###############################################
+@app.route("/model", methods=["GET", "POST"])
+def summarize():
+    form = SummarizeForm()
+    # here, if the request type is a POST we get the data from
+    #forms and save them else we return the forms html page
+    if request.method == 'POST':
+        userTxt =  "'" + request.form["Text"] + "'"
 
-    res = requests.post(url, json=data)
+        url = "http://localhost:5000/model/predict"
+        data = {
+        "text": [
+            userTxt
+            ]
+        }
 
-    return res.text
+        res = requests.post(url, json=data)
+
+        return f"<h2>Your text summarized</h2> <p>{res.text}</p>"
+
+    else:
+        return render_template('model.html', form=form)
 
 
 app.run(debug=True)

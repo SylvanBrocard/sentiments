@@ -6,3 +6,6 @@ class ContactForm(FlaskForm):
     subject = StringField("Subject")
     message = TextAreaField("Message")
     submit = SubmitField("Send")
+
+class SummarizeForm(FlaskForm):
+    text = TextAreaField("Text")
