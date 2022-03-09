@@ -7,5 +7,5 @@ class ContactForm(FlaskForm):
     message = TextAreaField("Message")
     submit = SubmitField("Send")
 
-class SummarizeForm(Flaskform):
+class SummarizeForm(FlaskForm):
     text = TextAreaField("Text")
