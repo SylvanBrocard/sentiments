@@ -101,7 +101,7 @@ def summarize():
     # here, if the request type is a POST we get the data from
     #forms and save them else we return the forms html page
     if request.method == 'POST':
-        userTxt =  "'" + request.form["Text"] + "'"
+        userTxt =  "'" + request.form["text"] + "'"
 
         url = "http://localhost:5000/model/predict"
         data = {
