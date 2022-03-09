@@ -4,10 +4,9 @@ LABEL maintainer="SylvanBrocard sylvan.brocard@gmail.com"
 
 WORKDIR /app
 
-COPY . /app
+COPY  dist/sentiments-0.1.0-py3-none-any.whl /app
 
-RUN cd /app \
-    && pip install -r requirements.txt
+RUN pip install sentiments-0.1.0-py3-none-any.whl
 
 EXPOSE 8000
 
