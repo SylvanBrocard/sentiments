@@ -1,1 +1,1 @@
-docker run -it -p 5001:5000 codait/max-text-summarizer
+docker run -it -p 80:5000/tcp codait/max-text-summarizer
