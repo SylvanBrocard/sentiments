@@ -118,4 +118,4 @@ def summarize():
         return render_template('model.html', form=form)
 
 
-app.run(debug=True)
+app.run(host='localhost', port=8000, debug=True)
