@@ -9,3 +9,4 @@ class ContactForm(FlaskForm):
 
 class SummarizeForm(FlaskForm):
     text = TextAreaField("Text")
+    submit = SubmitField("Send")
