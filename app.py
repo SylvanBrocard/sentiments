@@ -5,6 +5,7 @@ from flask import request
 import pandas as pd
 import psycopg2
 import requests
+import json
 
 ###############################################
 #          Define flask app                   #
@@ -111,8 +112,9 @@ def summarize():
         }
 
         res = requests.post(url, json=data)
+        test = json.loads(res.text)
 
-        return f"<h2>Your text summarized</h2> <p>{res.text[1]}</p>"
+        return f"<h2>Your text</h2> <p> {userTxt} </p> <h2>Your text summarized </h2> <p>{test['summary_text'][0]}</p>"
 
     else:
         return render_template('model.html', form=form)
