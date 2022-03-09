@@ -63,7 +63,7 @@ def get_connection():
             database="messages",
             user="wym_admin",
             password="admin",
-            host="localhost",
+            host="db",
             port=5432,
         )
         conn.autocommit = True
@@ -76,7 +76,7 @@ while not conn:
     conn = get_connection() # create connection object
 
     if conn:
-        print("Connection to the PostgreSQL established successfully.")
+        print("Connection to the PostgreSQL established successfully.", flush=True)
         curr = conn.cursor() # cursor object
         # create table in database
         curr.execute("""CREATE TABLE IF NOT EXISTS clients (
@@ -90,7 +90,7 @@ while not conn:
 
         conn.close() # close connection to database
     else:
-        print("Waiting for connection to PostgreSQL...")
+        print("Waiting for connection to PostgreSQL...", flush=True)
         sleep(2)
 
 
@@ -121,4 +121,4 @@ def summarize():
         return render_template('model.html', form=form)
 
 
-app.run(host='localhost', port=8000, debug=True)
+app.run(host="0.0.0.0", port=8000, debug=True)
