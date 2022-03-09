@@ -105,7 +105,7 @@ def summarize():
     if request.method == 'POST':
         userTxt =  "'" + request.form["text"] + "'"
 
-        url = "http://localhost:80/model/predict"
+        url = "http://model:5000/model/predict"
         data = {
         "text": [
             userTxt

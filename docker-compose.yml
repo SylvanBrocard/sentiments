@@ -21,3 +21,7 @@ services:
 
   model:
     image: codait/max-text-summarizer
+    ports:
+      - 5000:5000
+    expose:
+      - 5000
