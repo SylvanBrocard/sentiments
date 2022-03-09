@@ -5,6 +5,7 @@ from flask import request
 import pandas as pd
 import psycopg2
 
+
 ###############################################
 #          Define flask app                   #
 ###############################################
