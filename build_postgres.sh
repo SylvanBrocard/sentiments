@@ -1,0 +1,1 @@
+docker build -t messages-db  -f docker/postgres.dockerfile ./
