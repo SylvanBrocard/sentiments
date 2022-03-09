@@ -4,13 +4,10 @@ LABEL maintainer="SylvanBrocard sylvan.brocard@gmail.com"
 
 WORKDIR /app
 
-RUN pip install poetry
-
 COPY . /app
 
 RUN cd /app \
-    && poetry config virtualenvs.create false \
-    && poetry install
+    && pip install -r requirements.txt
 
 ENTRYPOINT [ "python" ]
 
