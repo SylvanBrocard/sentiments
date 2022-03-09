@@ -6,9 +6,8 @@ WORKDIR /app
 
 COPY . /app
 
-RUN cd /app \
-    && pip install -r requirements.txt
+RUN pip install /app/dist/sentiments-0.1.0-py3-none-any.whl
 
 ENTRYPOINT [ "python" ]
 
-CMD [ "app.py" ]
+CMD [ "sentiments/app.py" ]
