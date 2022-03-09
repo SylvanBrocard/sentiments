@@ -103,7 +103,7 @@ def summarize():
     if request.method == 'POST':
         userTxt =  "'" + request.form["text"] + "'"
 
-        url = "http://localhost:5001/model/predict"
+        url = "http://localhost:80/model/predict"
         data = {
         "text": [
             userTxt
@@ -112,10 +112,10 @@ def summarize():
 
         res = requests.post(url, json=data)
 
-        return f"<h2>Your text summarized</h2> <p>{res.text}</p>"
+        return f"<h2>Your text summarized</h2> <p>{res.text[1]}</p>"
 
     else:
         return render_template('model.html', form=form)
 
 
-app.run(debug=True)
+app.run(host='localhost', port=8000, debug=True)
