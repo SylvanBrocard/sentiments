@@ -1,0 +1,13 @@
+version: '3.9'
+
+services:
+  flask:
+    build: ./docker/flask.dockerfile
+    ports:
+      - 5000:5000
+
+  db:
+    build: ./docker/postgres.dockerfile
+
+  model:
+    image: codait/max-text-summarizer
