@@ -1,8 +1,7 @@
-from locale import currency
+from time import sleep
 from flask import Flask, render_template
 from forms import ContactForm, SummarizeForm
 from flask import request
-import pandas as pd
 import psycopg2
 import requests
 import json
@@ -72,25 +71,27 @@ def get_connection():
     except:
         return False
 
+conn = False
+while not conn:
+    conn = get_connection() # create connection object
 
-conn = get_connection() # create connection object
+    if conn:
+        print("Connection to the PostgreSQL established successfully.")
+        curr = conn.cursor() # cursor object
+        # create table in database
+        curr.execute("""CREATE TABLE IF NOT EXISTS clients (
+                        id serial PRIMARY KEY,
+                        name TEXT,
+                        email TEXT,
+                        subject TEXT,
+                        message TEXT);
+                        """)
+        id = 0 # initialize id at 0
 
-if conn:
-    print("Connection to the PostgreSQL established successfully.")
-    curr = conn.cursor() # cursor object
-    # create table in database
-    curr.execute("""CREATE TABLE IF NOT EXISTS clients (
-                    id serial PRIMARY KEY,
-                    name TEXT,
-                    email TEXT,
-                    subject TEXT,
-                    message TEXT);
-                    """)
-    id = 0 # initialize id at 0
-
-    conn.close() # close connection to database
-else:
-    print("Connection to the PostgreSQL encountered an error.")
+        conn.close() # close connection to database
+    else:
+        print("Waiting for connection to PostgreSQL...")
+        sleep(2)
 
 
 ###############################################
