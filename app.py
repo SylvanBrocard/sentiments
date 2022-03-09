@@ -4,6 +4,7 @@ from forms import ContactForm
 from flask import request
 import pandas as pd
 import psycopg2
+import requests
 
 
 ###############################################
@@ -92,5 +93,20 @@ curr.execute("""CREATE TABLE IF NOT EXISTS clients (
                 """)
 id = 0 # initialize id at 0
 conn.close()
+
+
+@app.route("/model")
+def summarize(userTxt):
+    url = "http://localhost:5000/model/predict"
+    data = {
+    "text": [
+        userTxt
+        ]
+    }
+
+    res = requests.post(url, json=data)
+
+    return res.text
+
 
 app.run(debug=True)
