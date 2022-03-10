@@ -1,6 +1,6 @@
 import os
 from time import sleep
-from flask import Flask, render_template
+from flask import Flask, render_template, escape
 from forms import ContactForm, SummarizeForm
 from flask import request
 import psycopg2
@@ -96,7 +96,7 @@ while not conn:
         
         # Get max id
         curr.execute("""SELECT MAX(id) from clients""")
-        id = curr.fetchone()
+        id = curr.fetchone()[0]
         id = 0 if not id else id+1
 
         conn.close() # close connection to database
@@ -114,7 +114,7 @@ def summarize():
     # here, if the request type is a POST we get the data from
     #forms and save them else we return the forms html page
     if request.method == 'POST':
-        userTxt =  "'" + request.form["text"] + "'"
+        userTxt =  '"""' + escape(request.form["text"]) + '"""'
 
         url = "http://model:5000/model/predict"
         data = {
@@ -126,7 +126,7 @@ def summarize():
         res = requests.post(url, json=data)
         test = json.loads(res.text)
 
-        return f"<h2>Your text</h2> <p> {userTxt} </p> <h2>Your text summarized </h2> <p>{test['summary_text'][0]}</p>"
+        return f"""<h2>Your text</h2> <p> {userTxt} </p> <h2>Your text summarized </h2> <p>{test['summary_text'][0]}</p>"""
 
     else:
         return render_template('model.html', form=form)
