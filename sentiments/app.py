@@ -66,8 +66,7 @@ def get_contact():
         else:
             msgToPrint = "Sorry to hear that... :( <br/>Please, help us improve our service."
 
-        return f"""<p>{msgToPrint}</p>
-        """
+        return render_template("contacted.html", value=msgToPrint)
 
     else:
         return render_template("contact.html", form=form)

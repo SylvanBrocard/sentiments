@@ -55,12 +55,16 @@
 /*******************************************************************
                                 END CONTACT
 *******************************************************************/
+body {
+    color: #d3e9f3;
+    text-align: center;
+}
+
 h2 {
     color: #d3e9f3;
     text-align: center;
     margin-top: 30px;
     margin-bottom: 30px;
-
 }
 
 p {
