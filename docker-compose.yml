@@ -27,4 +27,6 @@ services:
   summarizer:
     image: codait/max-text-summarizer
 
-  
+  sentimentAnalyzer:
+    image: codait/max-text-sentiment-classifier
+
