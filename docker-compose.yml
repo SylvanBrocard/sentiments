@@ -21,6 +21,8 @@ services:
       context: ./
     volumes:
       - ./data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
 
   summarizer:
     image: codait/max-text-summarizer
