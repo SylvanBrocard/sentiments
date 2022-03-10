@@ -113,7 +113,7 @@ while not conn:
 ###############################################
 #         Post on IBM text Summarizer         #
 ###############################################
-@app.route("/model", methods=["GET", "POST"])
+@app.route("/summarizer", methods=["GET", "POST"])
 def summarize():
     form = SummarizeForm()
     # here, if the request type is a POST we get the data from
@@ -121,7 +121,7 @@ def summarize():
     if request.method == "POST":
         userTxt = '"""' + escape(request.form["text"]) + '"""'
 
-        url = "http://model:5000/model/predict"
+        url = "http://summarizer:5000/model/predict"
         data = {"text": [userTxt]}
 
         res = requests.post(url, json=data)
@@ -130,7 +130,7 @@ def summarize():
         return f"""<h2>Your text</h2> <p> {userTxt} </p> <h2>Your text summarized </h2> <p>{test['summary_text'][0]}</p>"""
 
     else:
-        return render_template("model.html", form=form)
+        return render_template("summarizer.html", form=form)
 
 
 app.run(host="0.0.0.0", port=8000, debug=True)

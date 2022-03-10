@@ -22,5 +22,7 @@ services:
     volumes:
       - ./data:/var/lib/postgresql/data
 
-  model:
+  summarizer:
     image: codait/max-text-summarizer
+
+  
