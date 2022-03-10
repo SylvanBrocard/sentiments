@@ -34,22 +34,23 @@ def get_contact():
     # here, if the request type is a POST we get the data on contat
     #forms and save them else we return the contact forms html page
     if request.method == 'POST':
-        name =  "'" + request.form["name"] + "'"
-        email = "'" + request.form["email"] + "'"
-        subject = "'" + request.form["subject"] + "'"
-        message = "'" + request.form["message"] + "'"
+        name =  request.form["name"]
+        email = request.form["email"]
+        subject = request.form["subject"]
+        message = request.form["message"]
         global id
         
         conn = get_connection()
 
         curr = conn.cursor()
 
-        curr.execute(f"""INSERT INTO clients (id, name, email, subject, message) VALUES ({id},{name}, {email},{subject},{message});""")
+        curr.execute(
+            """INSERT INTO clients (id, name, email, subject, message) VALUES (%s, %s, %s, %s, %s);""",
+            (id, name, email, subject, message)
+        )
         id+=1
 
         conn.close()
-        # res = pd.DataFrame({'name':name, 'email':email, 'subject':subject ,'message':message}, index=[0])
-        # res.to_csv('./contactusMessage.csv')
         return "<p>Merci de nous avoir contactés.</p>"
 
     else:
@@ -97,7 +98,7 @@ while not conn:
         # Get max id
         curr.execute("""SELECT MAX(id) from clients""")
         id = curr.fetchone()[0]
-        id = 0 if not id else id+1
+        id = 0 if id is None else id+1
 
         conn.close() # close connection to database
     else:
