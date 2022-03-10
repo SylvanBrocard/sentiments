@@ -93,7 +93,11 @@ while not conn:
                         subject TEXT,
                         message TEXT);
                         """)
-        id = 0 # initialize id at 0
+        
+        # Get max id
+        curr.execute("""SELECT MAX(id) from clients""")
+        id = curr.fetchone()
+        id = 0 if not id else id+1
 
         conn.close() # close connection to database
     else:
