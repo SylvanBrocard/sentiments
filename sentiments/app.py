@@ -52,7 +52,22 @@ def get_contact():
         id += 1
 
         conn.close()
-        return "<p>Merci de nous avoir contactés.</p>"
+
+        # Sentiment Analyzer
+        url = "http://sentimentAnalyzer:5000/model/predict"
+        data = {"text": [message]}
+
+        res = requests.post(url, json=data)
+        output = json.loads(res.text)
+        pred = output['predictions'][0]
+
+        if pred['positive'] > pred['negative']:
+            msgToPrint = "Glad to hear that, thank you!"
+        else:
+            msgToPrint = "Sorry to hear that... :( <br/>Please, help us improve our service."
+
+        return f"""<p>{msgToPrint}</p>
+        """
 
     else:
         return render_template("contact.html", form=form)
@@ -119,15 +134,15 @@ def summarize():
     # here, if the request type is a POST we get the data from
     # forms and save them else we return the forms html page
     if request.method == "POST":
-        userTxt = '"""' + escape(request.form["text"]) + '"""'
+        userTxt = '"""' + request.form["text"] + '"""'
 
         url = "http://summarizer:5000/model/predict"
         data = {"text": [userTxt]}
 
         res = requests.post(url, json=data)
-        test = json.loads(res.text)
+        output = json.loads(res.text)
 
-        return f"""<h2>Your text</h2> <p> {userTxt} </p> <h2>Your text summarized </h2> <p>{test['summary_text'][0]}</p>"""
+        return f"""<h2>Your text</h2> <p> {userTxt} </p> <h2>Your text summarized </h2> <p>{output['summary_text'][0]}</p>"""
 
     else:
         return render_template("summarizer.html", form=form)
