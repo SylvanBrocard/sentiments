@@ -7,21 +7,20 @@ services:
       context: ./
     ports:
       - 8000:8000
-    expose:
-      - 8000
     volumes:
       - ./sentiments:/app
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
 
   db:
     build:
       dockerfile: ./docker/postgres.dockerfile
       context: ./
-    ports:
-      - 5432:5432
+    volumes:
+      - ./data:/var/lib/postgresql/data
 
   model:
     image: codait/max-text-summarizer
-    ports:
-      - 5000:5000
-    expose:
-      - 5000

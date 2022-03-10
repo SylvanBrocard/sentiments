@@ -1,3 +1,4 @@
+import os
 from time import sleep
 from flask import Flask, render_template
 from forms import ContactForm, SummarizeForm
@@ -5,6 +6,12 @@ from flask import request
 import psycopg2
 import requests
 import json
+
+###############################################
+#          Define environment variables       #
+###############################################
+DB_HOST = os.getenv("DB_HOST")
+DB_PORT = os.getenv("DB_PORT")
 
 ###############################################
 #          Define flask app                   #
@@ -63,8 +70,8 @@ def get_connection():
             database="messages",
             user="wym_admin",
             password="admin",
-            host="db",
-            port=5432,
+            host=DB_HOST,
+            port=DB_PORT,
         )
         conn.autocommit = True
         return conn
