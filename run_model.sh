@@ -1,1 +1,0 @@
-docker run -it -p 80:5000/tcp codait/max-text-summarizer
